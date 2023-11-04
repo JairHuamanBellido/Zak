@@ -1,5 +1,7 @@
-import * as cdk from 'aws-cdk-lib';
-import { Construct } from 'constructs';
+import * as cdk from "aws-cdk-lib";
+import { UserPool } from "aws-cdk-lib/aws-cognito";
+import { Construct } from "constructs";
+import { CognitoConstruct } from "./constructs/cognito.construct";
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 
 export class ZakStack extends cdk.Stack {
@@ -12,5 +14,7 @@ export class ZakStack extends cdk.Stack {
     // const queue = new sqs.Queue(this, 'InfrastructureQueue', {
     //   visibilityTimeout: cdk.Duration.seconds(300)
     // });
+
+    new CognitoConstruct(this, "ZakCognito");
   }
 }
