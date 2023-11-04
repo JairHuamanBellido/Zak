@@ -10,10 +10,8 @@ export class CognitoConstruct extends Construct {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id);
 
-    // Crea un parámetro para el nombre del pool de usuarios
     const name = "zak-cognito";
 
-    // Crea un pool de usuarios de Cognito
     const userPool = new UserPool(this, name, {
       userPoolName: name,
       accountRecovery: AccountRecovery.EMAIL_ONLY,
