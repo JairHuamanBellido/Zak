@@ -6,9 +6,9 @@
 </script>
 
 <Paragraph
-	class={cn({
-		'text-foreground/50': !valid,
-		'text-foreground': valid
+	class={cn('p-1 rounded-sm text-sm', {
+		'text-foreground/50 ': !valid,
+		'text-green-700 bg-green-200': valid
 	})}
 >
 	<slot />

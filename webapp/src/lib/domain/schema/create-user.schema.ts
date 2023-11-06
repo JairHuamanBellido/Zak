@@ -7,4 +7,4 @@ export const createUserSchema = z.object({
 	gender: z.string()
 });
 
-export type FormSchema = typeof createUserSchema;
+export type FormCreateAccountSchema = typeof createUserSchema;
