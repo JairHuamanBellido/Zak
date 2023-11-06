@@ -35,7 +35,7 @@
 				>
 				<div class="mt-8">
 					{#if form?.displayForm === 'ACCOUNT_CONFIRMATION'}
-						<Muted class="">
+						<Muted>
 							Please enter the verification code that we've sent to your email. This code is
 							necessary to complete your registration.
 						</Muted>
@@ -48,7 +48,7 @@
 						/>
 					{/if}
 					{#if form?.displayForm === 'FINAL'}
-						<Paragraph 
+						<Paragraph
 							>Account successfully verified!. Go to {' '}
 							<Link class="font-semibold" href="/">Sign In</Link>
 						</Paragraph>
