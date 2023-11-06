@@ -53,9 +53,15 @@
 	"types": "./dist/index.d.ts",
 	"type": "module",
 	"dependencies": {
+		"amazon-cognito-identity-js": "^6.3.6",
+		"bits-ui": "^0.9.0",
 		"clsx": "^2.0.0",
+		"formsnap": "^0.4.1",
 		"lucide-svelte": "^0.292.0",
+		"password-validator": "^5.3.0",
+		"sveltekit-superforms": "^1.9.0",
 		"tailwind-merge": "^2.0.0",
-		"tailwind-variants": "^0.1.18"
+		"tailwind-variants": "^0.1.18",
+		"zod": "^3.22.4"
 	}
 }
