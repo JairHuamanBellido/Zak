@@ -2,17 +2,20 @@ import { RemovalPolicy, StackProps } from "aws-cdk-lib";
 import {
   AccountRecovery,
   UserPool,
+  UserPoolOperation,
   VerificationEmailStyle,
 } from "aws-cdk-lib/aws-cognito";
+import { IFunction } from "aws-cdk-lib/aws-lambda";
 import { Construct } from "constructs";
 
 export class CognitoConstruct extends Construct {
+  private userPool: UserPool;
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id);
 
     const name = "zak-cognito";
 
-    const userPool = new UserPool(this, name, {
+    this.userPool = new UserPool(this, name, {
       userPoolName: name,
       accountRecovery: AccountRecovery.EMAIL_ONLY,
       signInAliases: {
@@ -46,17 +49,21 @@ export class CognitoConstruct extends Construct {
       },
     });
 
-    userPool.addClient("zak-app-client", {
+    this.userPool.addClient("zak-app-client", {
       userPoolClientName: "zak-app-client",
       oAuth: {
         flows: { authorizationCodeGrant: false, implicitCodeGrant: true },
       },
     });
 
-    userPool.addDomain("zak-domain-cognito", {
+    this.userPool.addDomain("zak-domain-cognito", {
       cognitoDomain: {
         domainPrefix: "zak",
       },
     });
+  }
+
+  addLambdaTrigger(operation: UserPoolOperation, lambda: IFunction) {
+    this.userPool.addTrigger(operation, lambda);
   }
 }
