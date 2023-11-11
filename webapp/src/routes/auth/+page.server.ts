@@ -19,7 +19,7 @@ export const actions: Actions = {
 		let isSuccess = false;
 
 		try {
-			const res = await authenticaton({ email, password }, event.cookies);
+			await authenticaton({ email, password }, event.cookies);
 
 			isSuccess = true;
 		} catch (error: any) {

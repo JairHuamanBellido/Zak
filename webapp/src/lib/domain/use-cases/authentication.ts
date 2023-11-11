@@ -22,7 +22,7 @@ export default function authenticaton({ email, password }: IAuthentication, cook
 
 		cognitoUser.authenticateUser(authenticationDetails, {
 			onSuccess: (result) => {
-				cookies.set('token', result.getAccessToken().getJwtToken());
+				cookies.set('token', result.getIdToken().getJwtToken());
 
 				resolve({ isSuccess: true });
 			},
