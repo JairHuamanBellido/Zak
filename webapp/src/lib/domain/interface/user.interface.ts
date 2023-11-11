@@ -5,3 +5,8 @@ export interface ICreateUser {
 	readonly lastname: string;
 	readonly password: string;
 }
+
+export interface IAuthentication {
+	readonly email: string;
+	readonly password: string;
+}

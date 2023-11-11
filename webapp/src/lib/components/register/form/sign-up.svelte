@@ -104,5 +104,5 @@
 </Form.Root>
 <Paragraph class="text-foreground/60 mt-2 text-center">
 	Already have an account?
-	<Link href="/" class="text-foreground">Sign In</Link>
+	<Link href="/auth" class="text-foreground">Sign In</Link>
 </Paragraph>
