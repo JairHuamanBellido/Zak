@@ -3,7 +3,7 @@ import { Construct } from "constructs";
 import { CognitoConstruct } from "./constructs/cognito.construct";
 import { SignUpLambdaTriggerConstruct } from "./constructs/sign-up-trigger-lambda.construct";
 import { UserPoolOperation } from "aws-cdk-lib/aws-cognito";
-// import * as sqs from 'aws-cdk-lib/aws-sqs';
+import { APIGatewayConstruct } from "./constructs/api-gateway.construct";
 
 export class ZakStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -19,5 +19,7 @@ export class ZakStack extends cdk.Stack {
       UserPoolOperation.POST_CONFIRMATION,
       signUpLambdaTrigger
     );
+
+    new APIGatewayConstruct(this, "ZakAPIRest", cognito.userPool);
   }
 }
