@@ -9,13 +9,13 @@ import { IFunction } from "aws-cdk-lib/aws-lambda";
 import { Construct } from "constructs";
 
 export class CognitoConstruct extends Construct {
-  private userPool: UserPool;
+  private _userPool: UserPool;
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id);
 
     const name = "zak-cognito";
 
-    this.userPool = new UserPool(this, name, {
+    this._userPool = new UserPool(this, name, {
       userPoolName: name,
       accountRecovery: AccountRecovery.EMAIL_ONLY,
       signInAliases: {
@@ -49,14 +49,14 @@ export class CognitoConstruct extends Construct {
       },
     });
 
-    this.userPool.addClient("zak-app-client", {
+    this._userPool.addClient("zak-app-client", {
       userPoolClientName: "zak-app-client",
       oAuth: {
         flows: { authorizationCodeGrant: false, implicitCodeGrant: true },
       },
     });
 
-    this.userPool.addDomain("zak-domain-cognito", {
+    this._userPool.addDomain("zak-domain-cognito", {
       cognitoDomain: {
         domainPrefix: "zak",
       },
@@ -64,6 +64,9 @@ export class CognitoConstruct extends Construct {
   }
 
   addLambdaTrigger(operation: UserPoolOperation, lambda: IFunction) {
-    this.userPool.addTrigger(operation, lambda);
+    this._userPool.addTrigger(operation, lambda);
+  }
+  get userPool() {
+    return this._userPool;
   }
 }
