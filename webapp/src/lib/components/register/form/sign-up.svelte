@@ -8,7 +8,7 @@
 	import type { SuperValidated } from 'sveltekit-superforms';
 	import PasswordPolicy from '../password-policy/password-policy.svelte';
 	import { passwordIssues } from '$lib/utils/password-policy.validaator';
-	import { Link, Paragraph } from '$lib/components/ui/typography';
+	import { TypographyLink, TypographyParagraph } from '$lib/components/ui/typography';
 	export let form: SuperValidated<FormCreateAccountSchema>;
 	export let isError: boolean | undefined;
 	export let error: string;
@@ -102,7 +102,7 @@
 		>{submitting ? 'Loading' : 'Create Account'}</Form.Button
 	>
 </Form.Root>
-<Paragraph class="text-foreground/60 mt-2 text-center">
+<TypographyParagraph class="text-foreground/60 mt-2 text-center">
 	Already have an account?
-	<Link href="/auth" class="text-foreground">Sign In</Link>
-</Paragraph>
+	<TypographyLink href="/auth" class="text-foreground">Sign In</TypographyLink>
+</TypographyParagraph>
