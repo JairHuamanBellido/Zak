@@ -8,9 +8,8 @@ passwordPolicy.is().uppercase();
 passwordPolicy.is().symbols();
 passwordPolicy.is().digits(1);
 
-
-const passwordIssues = (password:string): any[] => {
-    return passwordPolicy.validate(password, {list: true}) as any[]
-}
+const passwordIssues = (password: string): any[] => {
+	return passwordPolicy.validate(password, { list: true }) as any[];
+};
 
 export { passwordIssues };

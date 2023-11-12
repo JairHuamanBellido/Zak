@@ -22,7 +22,7 @@ export const actions: Actions = {
 			await authenticaton({ email, password }, event.cookies);
 
 			isSuccess = true;
-		} catch (error: any) {
+		} catch (_) {
 			isSuccess = false;
 		} finally {
 			if (isSuccess) {

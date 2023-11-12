@@ -1,3 +1,5 @@
-<h1>
-    Main dashboard
-</h1>
+<script>
+	import { TypographyH1 } from '$lib/components/ui/typography';
+</script>
+
+<TypographyH1>Main dashboard</TypographyH1>

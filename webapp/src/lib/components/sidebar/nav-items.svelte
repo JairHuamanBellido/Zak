@@ -1,6 +1,5 @@
 <script lang="ts">
-	import type { SvelteComponent } from 'svelte';
-	import { Link } from '../ui/typography';
+	import { TypographyLink } from '../ui/typography';
 
 	export let href: string;
 	export let label: string;
@@ -8,11 +7,11 @@
 </script>
 
 <li>
-	<Link
+	<TypographyLink
 		class="transition-all flex font-light no-underline gap-x-2 w-full p-2 hover:bg-primary/5  rounded"
 		{href}
 	>
 		<svelte:component this={icon} />
 		{label}
-	</Link>
+	</TypographyLink>
 </li>
