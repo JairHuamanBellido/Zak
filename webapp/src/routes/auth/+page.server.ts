@@ -26,7 +26,7 @@ export const actions: Actions = {
 			isSuccess = false;
 		} finally {
 			if (isSuccess) {
-				throw redirect(303, '/');
+				throw redirect(303, '/dashboard');
 			}
 
 			return { form, isError: true, error: 'Invalid Credentials' };
