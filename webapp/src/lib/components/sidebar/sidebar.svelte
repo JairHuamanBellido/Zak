@@ -9,6 +9,6 @@
 
 	<ul class="space-y-3">
 		<NavItems label={'Dashboard'} href="/dashboard" icon={LayoutDashboard} />
-		<NavItems label={'Investments'} href="/dashboard" icon={Wallet2} />
+		<NavItems label={'Investments'} href="/dashboard/investments" icon={Wallet2} />
 	</ul>
 </div>
