@@ -26,7 +26,15 @@ export class APIGatewayConstruct extends Construct {
     const createStockPurchaseIntegration =
       this.createStockPurchasesIntegration();
 
+    const getStockPurchasesByUserIntegration =
+      this.getAllStockPurchasesByUserIntegration();
+
     stockPurchases.addMethod("POST", createStockPurchaseIntegration, {
+      authorizer: auth,
+      authorizationType: apigw.AuthorizationType.COGNITO,
+    });
+
+    stockPurchases.addMethod("GET", getStockPurchasesByUserIntegration, {
       authorizer: auth,
       authorizationType: apigw.AuthorizationType.COGNITO,
     });
@@ -48,5 +56,23 @@ export class APIGatewayConstruct extends Construct {
     );
 
     return new apigw.LambdaIntegration(createStockPurchasesFn);
+  }
+
+  private getAllStockPurchasesByUserIntegration() {
+    const getStockPurchasesByUserFn = new lambda.Function(
+      this,
+      "GetStockPurchasesByUserFn",
+      {
+        runtime: lambda.Runtime.NODEJS_18_X,
+        handler: "list-stock-purchases.handler",
+        functionName: "zak-get-stock-purchases-by-user",
+        code: lambda.Code.fromAsset("lambda/api/dist"),
+        environment: {
+          MONGODB_URI: process.env.MONGODB_URI || "",
+        },
+      }
+    );
+
+    return new apigw.LambdaIntegration(getStockPurchasesByUserFn);
   }
 }
