@@ -1,4 +1,4 @@
-export interface ICreateStockPurchase {
+export interface IStockPurchase {
   readonly date: Date;
   readonly symbol: string;
   readonly quantity: number;

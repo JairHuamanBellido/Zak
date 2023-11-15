@@ -1,25 +1,7 @@
 import { APIGatewayEvent } from "aws-lambda";
 import { jwtDecode } from "jwt-decode";
-import { ICreateStockPurchase } from "./interfaces/StockPurchases.interface";
-import { config } from "dotenv";
-import { Db, MongoClient } from "mongodb";
-config();
-
-const uri = process.env.MONGODB_URI || "";
-
-let cacheDb: Db | null = null;
-
-async function connectToDatabase() {
-  if (cacheDb) {
-    return cacheDb;
-  }
-
-  const client = await MongoClient.connect(uri);
-  const db = await client.db("zak");
-
-  cacheDb = db;
-  return db;
-}
+import { IStockPurchase } from "./interfaces/StockPurchases.interface";
+import { connectToDatabase } from "./database/connection";
 
 export const handler = async (event: APIGatewayEvent, context: any) => {
   context.callbackWaitsForEmptyEventLoop = false;
@@ -29,7 +11,7 @@ export const handler = async (event: APIGatewayEvent, context: any) => {
   const userId = jwtDecode(jwtToken).sub ?? "";
   const payload = JSON.parse(event.body ?? "{}");
 
-  const newStockPurchase: ICreateStockPurchase = {
+  const newStockPurchase: IStockPurchase = {
     userId,
     currency: payload.currency,
     date: new Date(payload.date),
