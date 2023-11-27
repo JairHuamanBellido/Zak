@@ -4,7 +4,7 @@
 
 <div class="w-screen h-screen relative flex overflow-auto">
 	<Sidebar />
-	<div class="w-[calc(100%_-_300px)] p-12">
+	<div class="w-[calc(100%_-_240px)] p-12">
 		<slot />
 	</div>
 </div>
