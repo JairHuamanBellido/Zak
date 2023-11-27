@@ -7,7 +7,7 @@
 
 <h1
 	{...$$restProps}
-	class={cn('scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl', classname)}
+	class={cn('scroll-m-20 text-4xl font-extrabold tracking-tight', classname)}
 >
 	<slot />
 </h1>

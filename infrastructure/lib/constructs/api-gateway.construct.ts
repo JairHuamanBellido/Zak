@@ -2,6 +2,7 @@ import { Construct } from "constructs";
 import * as apigw from "aws-cdk-lib/aws-apigateway";
 import * as lambda from "aws-cdk-lib/aws-lambda";
 import { IUserPool } from "aws-cdk-lib/aws-cognito";
+import { Duration } from "aws-cdk-lib";
 
 export class APIGatewayConstruct extends Construct {
   constructor(scope: Construct, id: string, cognitoAuthorizer: IUserPool) {
@@ -23,11 +24,19 @@ export class APIGatewayConstruct extends Construct {
 
     const stockPurchases = APIGateway.root.addResource("stock-purchases");
 
+    const portfolioResource = APIGateway.root.addResource("portfolio-summary");
+    const portfolioValuationResource = portfolioResource.addResource(
+      "portfolio-valuation"
+    );
+
     const createStockPurchaseIntegration =
       this.createStockPurchasesIntegration();
 
     const getStockPurchasesByUserIntegration =
       this.getAllStockPurchasesByUserIntegration();
+
+    const getPortfolioSummaryIntegration =
+      this.getPortfolioSummaryIntegration();
 
     stockPurchases.addMethod("POST", createStockPurchaseIntegration, {
       authorizer: auth,
@@ -38,6 +47,15 @@ export class APIGatewayConstruct extends Construct {
       authorizer: auth,
       authorizationType: apigw.AuthorizationType.COGNITO,
     });
+
+    portfolioValuationResource.addMethod(
+      "GET",
+      getPortfolioSummaryIntegration,
+      {
+        authorizer: auth,
+        authorizationType: apigw.AuthorizationType.COGNITO,
+      }
+    );
   }
 
   private createStockPurchasesIntegration() {
@@ -51,6 +69,7 @@ export class APIGatewayConstruct extends Construct {
         code: lambda.Code.fromAsset("lambda/api/dist"),
         environment: {
           MONGODB_URI: process.env.MONGODB_URI || "",
+          POLYGON_API_KEY: process.env.POLYGON_API_KEY || "",
         },
       }
     );
@@ -74,5 +93,23 @@ export class APIGatewayConstruct extends Construct {
     );
 
     return new apigw.LambdaIntegration(getStockPurchasesByUserFn);
+  }
+
+  private getPortfolioSummaryIntegration() {
+    const getPortfolioSummaryFn = new lambda.Function(
+      this,
+      "GetPortfolioSumaryFn",
+      {
+        runtime: lambda.Runtime.NODEJS_18_X,
+        handler: "get-portfolio-summary.handler",
+        functionName: "zak-get-portfolio-summary",
+        code: lambda.Code.fromAsset("lambda/api/dist"),
+        environment: {
+          MONGODB_URI: process.env.MONGODB_URI || "",
+        },
+      }
+    );
+
+    return new apigw.LambdaIntegration(getPortfolioSummaryFn);
   }
 }

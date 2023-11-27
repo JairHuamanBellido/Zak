@@ -4,7 +4,7 @@
 	import NavItems from './nav-items.svelte';
 </script>
 
-<div class="border-r w-[300px] p-6 h-full">
+<div class="border-r w-[240px] p-6 h-full">
 	<TypographyH1 class="lg:text-3xl mb-12">Zak</TypographyH1>
 
 	<ul class="space-y-3">
