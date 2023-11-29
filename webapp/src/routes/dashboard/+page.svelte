@@ -9,6 +9,7 @@
 	import type { PageData } from './$types';
 	import { TrendingUp } from 'lucide-svelte';
 	import LatestTransactionsTable from '$lib/components/dashboard/latest-transactions-table.svelte';
+	import PortfolioDistribution from '$lib/components/dashboard/portfolio-distribution.svelte';
 
 	export let data: PageData;
 
@@ -59,9 +60,11 @@
 
 	<div bind:clientWidth={boxWidth} style="height: 500px;" id="svg-container" class="relative" />
 </div>
-<div class="w-full flex items-center space-x-12">
+<div class="w-full flex items-stretch min-h-[400px] space-x-12">
 	<div class="w-3/4">
 		<LatestTransactionsTable />
 	</div>
-	<div class="w-1/4">A pie chart</div>
+	<div class="w-1/4 relative">
+		<PortfolioDistribution />
+	</div>
 </div>
