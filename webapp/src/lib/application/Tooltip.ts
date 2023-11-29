@@ -1,5 +1,5 @@
 import type { IPortfolio, IPortfolioTimeSeriesData } from '$lib/domain/interface/portfolio.interface';
-import { formDate } from '$lib/utils/utils';
+import { formatDateShort } from '$lib/utils/utils';
 import { bisector, pointer, type Selection } from 'd3';
 
 export class TooltipChart {
@@ -69,7 +69,7 @@ export class TooltipChart {
 			.attr('transform', `translate(${x(selectDate) + 30},${y(data[i].value) - 10})`)
 			.attr('fill', '#3f3f3f')
 			.attr('font-size', '12px')
-			.text(formDate(selectDate));
+			.text(formatDateShort(selectDate));
 		this._tooltipTextPrice
 			.attr('transform', `translate(${x(selectDate) + 30},${y(data[i].value) + 15})`)
 			.attr('fill', 'hsl(var(--primary)')

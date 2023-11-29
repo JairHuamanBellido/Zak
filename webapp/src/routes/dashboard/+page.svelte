@@ -8,6 +8,7 @@
 	import { Chart } from '$lib/application/Chart';
 	import type { PageData } from './$types';
 	import { TrendingUp } from 'lucide-svelte';
+	import LatestTransactionsTable from '$lib/components/dashboard/latest-transactions-table.svelte';
 
 	export let data: PageData;
 
@@ -35,19 +36,19 @@
 	<div class="mt-12 flex space-x-40 items-center">
 		<div>
 			<TypographyMuted class="mb-1">Invested Value</TypographyMuted>
-			<TypographyParagraph class="text-4xl font-semibold mb-1"
+			<TypographyParagraph class="mb-1 text-3xl"
 				>${data.portfolio.totalInvestment}</TypographyParagraph
 			>
 		</div>
 		<div>
 			<TypographyMuted class="mb-1">Overall Return</TypographyMuted>
 			<div class="flex items-center space-x-4">
-				<TypographyParagraph class="text-4xl font-semibold mb-1"
+				<TypographyParagraph class="mb-1 text-3xl"
 					>${data.portfolio.currentBalance}</TypographyParagraph
 				>
 
 				<TypographyParagraph
-					class="text-green-600 bg-green-100/60 py-1 px-2 rounded  flex gap-x-2 items-center"
+					class="text-green-600 bg-green-100/60  px-2 rounded  flex gap-x-2 items-center"
 				>
 					<TrendingUp />
 					{data.portfolio.performance}%
@@ -57,4 +58,10 @@
 	</div>
 
 	<div bind:clientWidth={boxWidth} style="height: 500px;" id="svg-container" class="relative" />
+</div>
+<div class="w-full flex items-center space-x-12">
+	<div class="w-3/4">
+		<LatestTransactionsTable />
+	</div>
+	<div class="w-1/4">A pie chart</div>
 </div>
