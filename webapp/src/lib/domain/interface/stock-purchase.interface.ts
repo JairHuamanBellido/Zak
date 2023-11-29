@@ -15,4 +15,5 @@ export interface IStockPurchasesAPI {
 	readonly quantity: number;
 	readonly symbol: string;
 	readonly totalCost: number;
+	readonly performance:number;
 }

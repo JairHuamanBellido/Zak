@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 import { TooltipChart } from './Tooltip';
-import { formDate } from '$lib/utils/utils';
+import { formatDateShort } from '$lib/utils/utils';
 import type { IPortfolioTimeSeriesData } from '$lib/domain/interface/portfolio.interface';
 
 const height = 500;
@@ -115,13 +115,13 @@ export class Chart {
 					.axisBottom<Date>(this.getX())
 					.ticks(this._boxWidth / 80)
 					.tickSizeOuter(0)
-					.tickFormat((d) => `${formDate(d)}`)
+					.tickFormat((d) => `${formatDateShort(d)}`)
 			);
 
 		d3.axisBottom<any>(this.getX())
 			.ticks(this._boxWidth / 80)
 			.tickSizeOuter(0)
-			.tickFormat((d) => `${formDate(d)}`);
+			.tickFormat((d) => `${formatDateShort(d)}`);
 		this._svg.selectAll('g.x-axis-container').call(axisCall);
 	}
 

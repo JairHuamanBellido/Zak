@@ -55,6 +55,10 @@ export const flyAndScale = (
 	};
 };
 
-export const formDate = (date: Date) => {
+export const formatDateShort = (date: Date) => {
 	return date.toLocaleDateString('en-US', { day: '2-digit', month: 'short' });
 };
+
+export const formatDateDefault = (date: Date) => date.toISOString().substring(0, 10);
+
+export const roundNumberTwoDecimals = (number: number) => Math.round(number * 100) / 100;
