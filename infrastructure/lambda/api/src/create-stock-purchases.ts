@@ -109,12 +109,22 @@ export const handler = async (event: APIGatewayEvent, context: any) => {
     await stockPurchasesHistorialCollection.insertMany(historicalData);
     return {
       statusCode: 200,
+      headers: {
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST",
+      },
       body: JSON.stringify({ message: "Created susccessfully!" }),
     };
   } catch (error) {
     console.log(error);
     return {
       statusCode: 500,
+      headers: {
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST",
+      },
       body: JSON.stringify({ error: "Something went wrong" }),
     };
   }

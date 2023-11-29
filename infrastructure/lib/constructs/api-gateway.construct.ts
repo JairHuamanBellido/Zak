@@ -11,6 +11,12 @@ export class APIGatewayConstruct extends Construct {
     const APIGateway = new apigw.RestApi(this, id, {
       restApiName: "zak-api-rest",
       description: "API Gateway for Zak application",
+      defaultCorsPreflightOptions: {
+        allowHeaders: apigw.Cors.DEFAULT_HEADERS,
+        allowOrigins: ["*"],
+        allowMethods: apigw.Cors.ALL_METHODS,
+        allowCredentials: true,
+      },
     });
 
     const auth = new apigw.CognitoUserPoolsAuthorizer(
@@ -29,6 +35,10 @@ export class APIGatewayConstruct extends Construct {
       "portfolio-valuation"
     );
 
+    const latestTransactionsResource = portfolioResource.addResource(
+      "latest-transactions"
+    );
+
     const createStockPurchaseIntegration =
       this.createStockPurchasesIntegration();
 
@@ -37,6 +47,9 @@ export class APIGatewayConstruct extends Construct {
 
     const getPortfolioSummaryIntegration =
       this.getPortfolioSummaryIntegration();
+
+    const getLatestTransactionsIntegration =
+      this.getLatestTransactionsIntegration();
 
     stockPurchases.addMethod("POST", createStockPurchaseIntegration, {
       authorizer: auth,
@@ -51,6 +64,15 @@ export class APIGatewayConstruct extends Construct {
     portfolioValuationResource.addMethod(
       "GET",
       getPortfolioSummaryIntegration,
+      {
+        authorizer: auth,
+        authorizationType: apigw.AuthorizationType.COGNITO,
+      }
+    );
+
+    latestTransactionsResource.addMethod(
+      "GET",
+      getLatestTransactionsIntegration,
       {
         authorizer: auth,
         authorizationType: apigw.AuthorizationType.COGNITO,
@@ -111,5 +133,23 @@ export class APIGatewayConstruct extends Construct {
     );
 
     return new apigw.LambdaIntegration(getPortfolioSummaryFn);
+  }
+
+  private getLatestTransactionsIntegration() {
+    const getLatestTransactionsFn = new lambda.Function(
+      this,
+      "GetLatestTransactionFn",
+      {
+        runtime: lambda.Runtime.NODEJS_18_X,
+        handler: "get-latest-transactions.handler",
+        functionName: "zak-get-latest-transactions",
+        code: lambda.Code.fromAsset("lambda/api/dist"),
+        environment: {
+          MONGODB_URI: process.env.MONGODB_URI || "",
+        },
+      }
+    );
+
+    return new apigw.LambdaIntegration(getLatestTransactionsFn);
   }
 }

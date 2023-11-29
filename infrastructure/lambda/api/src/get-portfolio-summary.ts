@@ -121,6 +121,11 @@ export const handler = async (event: APIGatewayEvent, context: any) => {
     };
     return {
       statusCode: 200,
+      headers: {
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET",
+      },
       body: JSON.stringify(response),
     };
   } catch (error: any) {
@@ -128,6 +133,11 @@ export const handler = async (event: APIGatewayEvent, context: any) => {
 
     return {
       statusCode: 500,
+      headers: {
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET",
+      },
       body: JSON.stringify({ error: new Error(error).message ?? "" }),
     };
   }
