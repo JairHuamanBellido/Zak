@@ -9,3 +9,9 @@ export interface IPortfolio {
 	readonly performance: number;
 	readonly timeSeriesData: IPortfolioTimeSeriesData[];
 }
+
+export interface IPortfolioDistribution {
+	readonly symbol: string;
+	readonly totalInvestment: number;
+	readonly percentageOfTotal: number;
+}

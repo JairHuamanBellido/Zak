@@ -39,6 +39,10 @@ export class APIGatewayConstruct extends Construct {
       "latest-transactions"
     );
 
+    const investementByStockResource = portfolioResource.addResource(
+      "investment-by-stock"
+    );
+
     const createStockPurchaseIntegration =
       this.createStockPurchasesIntegration();
 
@@ -50,6 +54,9 @@ export class APIGatewayConstruct extends Construct {
 
     const getLatestTransactionsIntegration =
       this.getLatestTransactionsIntegration();
+
+    const getInvestmentByStockIntegration =
+      this.getInvestmentByStockIntegration();
 
     stockPurchases.addMethod("POST", createStockPurchaseIntegration, {
       authorizer: auth,
@@ -77,6 +84,12 @@ export class APIGatewayConstruct extends Construct {
         authorizer: auth,
         authorizationType: apigw.AuthorizationType.COGNITO,
       }
+    );
+
+    investementByStockResource.addMethod(
+      "GET",
+      getInvestmentByStockIntegration,
+      { authorizer: auth, authorizationType: apigw.AuthorizationType.COGNITO }
     );
   }
 
@@ -151,5 +164,23 @@ export class APIGatewayConstruct extends Construct {
     );
 
     return new apigw.LambdaIntegration(getLatestTransactionsFn);
+  }
+
+  private getInvestmentByStockIntegration() {
+    const getInvestmentByStockFn = new lambda.Function(
+      this,
+      "GetInvestmentByStockFn",
+      {
+        runtime: lambda.Runtime.NODEJS_18_X,
+        handler: "get-investment-by-stock.handler",
+        functionName: "zak-get-investment-by-stock",
+        code: lambda.Code.fromAsset("lambda/api/dist"),
+        environment: {
+          MONGODB_URI: process.env.MONGODB_URI || "",
+        },
+      }
+    );
+
+    return new apigw.LambdaIntegration(getInvestmentByStockFn);
   }
 }
