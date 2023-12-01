@@ -12,7 +12,7 @@ export class TooltipChart {
 	constructor(public svg: d3.Selection<SVGSVGElement, unknown, HTMLElement, any>) {
 		this._tooltip = svg
 			.append('rect')
-			.attr('fill', '#fff')
+			.attr('fill', 'hsl(var(--background))')
 			.attr('filter', 'drop-shadow( 0 0 10px rgba(67, 67, 67, .1))')
 			.attr('width', '100')
 			.attr('x', 0)
@@ -39,10 +39,11 @@ export class TooltipChart {
 			.attr('cy', 0)
 			.attr('r', 10)
 			.attr('display','none')
-			.attr('filter', 'drop-shadow( 0 0 10px rgba(67, 67, 67, 0.5))')
-			.attr('fill', 'hsl(var(--primary)')
-			.attr('stroke', 'white')
-			.attr('stroke-width', 3);
+			// .attr('filter', 'drop-shadow( 0 0 10px rgba(67, 67, 67, 0.5))')
+			.attr('filter', 'drop-shadow( 0 0 15px hsl(var(--primary))')
+			.attr('fill', 'hsl(var(--primary))')
+			// .attr('stroke', 'hsl(var(--background) / 0.5)')
+			// .attr('stroke-width', 3);
 	}
 
 	public onMouseEnter(
@@ -67,7 +68,7 @@ export class TooltipChart {
 		this._tooltip.attr('transform', `translate(${x(selectDate) + 20},${y(data[i].value) - 30})`);
 		this._tooltipTextDate
 			.attr('transform', `translate(${x(selectDate) + 30},${y(data[i].value) - 10})`)
-			.attr('fill', '#3f3f3f')
+			.attr('fill', 'hsl(var(--muted-foreground))')
 			.attr('font-size', '12px')
 			.text(formatDateShort(selectDate));
 		this._tooltipTextPrice

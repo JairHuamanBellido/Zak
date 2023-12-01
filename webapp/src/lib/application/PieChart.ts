@@ -8,22 +8,16 @@ export class PieChart {
 	private _data: IPortfolioDistribution[];
 	constructor(idContainer: string, data: IPortfolioDistribution[], width: number, height: number) {
 		this._boxWidth = width;
-		this._boxHeight = height;
+		this._boxHeight = Math.min(width, height);
 		this._data = data;
 		this._svg = d3
 			.select(idContainer)
 			.append('svg')
+			.attr('class', 'pie-chart')
 			.attr('width', this._boxWidth)
 			.attr('height', this._boxHeight)
-			.attr('viewBox', [-width / 2, -height / 2, width, height])
+			.attr('viewBox', [-width/2, -height / 2, width, height])
 			.attr('style', 'max-width: 100%; height: auto; font: 10px sans-serif;');
-	}
-
-	private getColor() {
-		return d3
-			.scaleOrdinal()
-			.domain(this._data.map((d) => d.symbol))
-			.range(d3.quantize((t) => d3.interpolateSpectral(t * 0.8 + 0.1), data.length).reverse());
 	}
 
 	private createPie() {
@@ -35,10 +29,11 @@ export class PieChart {
 
 	public display() {
 		const arc = d3
-			.arc()
-			.innerRadius(0)
-			.outerRadius(this._boxWidth - 100);
-		const labelRadius = arc.outerRadius()() * 0.8;
+			.arc<IPortfolioDistribution>()
+			.innerRadius(50)
+			.outerRadius(Math.min(this._boxWidth, this._boxHeight) / 2 - 1);
+		const labelRadius =
+			arc.outerRadius()({ percentageOfTotal: 2, symbol: 'voo', totalInvestment: 203 }) * 0.8;
 
 		const arcLabel = d3.arc().innerRadius(labelRadius).outerRadius(labelRadius);
 
@@ -46,37 +41,24 @@ export class PieChart {
 
 		this._svg
 			.append('g')
-			.attr('stroke', 'white')
+			.attr('stroke', 'hsl(var(--background))')
+			.attr('class', 'asd')
 			.selectAll()
 			.data(arcs)
 			.join('path')
-			.attr('fill', '#d3d3d3')
+			.attr('fill', (d) => `hsl(var(--primary)/ ${d.data.percentageOfTotal / 100}`)
 			.attr('d', arc)
 			.append('title')
-			.text((d) => d.symbol);
+			.text((d) => d.data.symbol);
+	}
 
-		this._svg
-			.append('g')
-			.attr('text-anchor', 'middle')
-			.selectAll()
-			.data(arcs)
-			.join('text')
-			.attr('transform', (d) => `translate(${arcLabel.centroid(d)})`)
-			.call((text) =>
-				text
-					.append('tspan')
-					.attr('y', '-0.4em')
-					.attr('font-weight', 'bold')
-					.text((d) => d.data.symbol)
-			)
-			.call((text) =>
-				text
-					.filter((d) => d.endAngle - d.startAngle > 0.25)
-					.append('tspan')
-					.attr('x', 0)
-					.attr('y', '0.7em')
-					.attr('fill-opacity', 0.7)
-					.text((d) => d.data.totalInvestment)
-			);
+	public update(width: number, height: number) {
+		const boxWidth = width;
+		const boxHeigth = Math.min(width, height);
+
+		d3.select('.pie-chart')
+			.attr('width', boxWidth)
+			.attr('height', boxHeigth)
+			.attr('viewBox', [-boxWidth / 2, -boxHeigth / 2, boxWidth, boxHeigth]);
 	}
 }

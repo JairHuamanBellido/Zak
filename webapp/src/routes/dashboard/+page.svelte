@@ -49,7 +49,7 @@
 				>
 
 				<TypographyParagraph
-					class="text-green-600 bg-green-100/60  px-2 rounded  flex gap-x-2 items-center"
+					class="text-green-600 px-2 rounded  flex gap-x-2 items-center"
 				>
 					<TrendingUp />
 					{data.portfolio.performance}%
@@ -60,11 +60,12 @@
 
 	<div bind:clientWidth={boxWidth} style="height: 500px;" id="svg-container" class="relative" />
 </div>
-<div class="w-full flex items-stretch min-h-[400px] space-x-12">
-	<div class="w-3/4">
-		<LatestTransactionsTable />
-	</div>
-	<div class="w-1/4 relative">
-		<PortfolioDistribution />
-	</div>
+<div class="w-full">
+	<LatestTransactionsTable />
+</div>
+<div class="w-full flex space-x-12 mt-8">
+</div>
+
+<div class="w-full h-[400px] relative mt-8">
+	<PortfolioDistribution />
 </div>
