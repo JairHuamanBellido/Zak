@@ -48,9 +48,7 @@
 					>${data.portfolio.currentBalance}</TypographyParagraph
 				>
 
-				<TypographyParagraph
-					class="text-green-600 px-2 rounded  flex gap-x-2 items-center"
-				>
+				<TypographyParagraph class="text-green-600 px-2 rounded  flex gap-x-2 items-center">
 					<TrendingUp />
 					{data.portfolio.performance}%
 				</TypographyParagraph>
@@ -62,8 +60,6 @@
 </div>
 <div class="w-full">
 	<LatestTransactionsTable />
-</div>
-<div class="w-full flex space-x-12 mt-8">
 </div>
 
 <div class="w-full h-[400px] relative mt-8">
