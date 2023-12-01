@@ -1,21 +1,16 @@
 <script lang="ts">
 	import { cn } from "$lib/utils/utils";
+
+
 	import type { HTMLAttributes } from "svelte/elements";
 
-	type $$Props = HTMLAttributes<HTMLTableRowElement> & {
-		"data-state"?: unknown;
-	};
+	type $$Props = HTMLAttributes<HTMLDivElement>;
 
 	let className: $$Props["class"] = undefined;
 	export { className as class };
 </script>
 
-<tr
-	class={cn(
-		"transition-colors border-b hover:bg-muted/50 data-[state=selected]:bg-muted",
-		className
-	)}
+<div
+	class={cn("animate-pulse rounded-md bg-muted", className)}
 	{...$$restProps}
->
-	<slot />
-</tr>
+/>
