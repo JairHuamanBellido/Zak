@@ -1,0 +1,25 @@
+{
+  "name": "cognito-triggers",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "compile": "tsc",
+    "prebuild": "rm -rf dist",
+    "build": " esbuild ./**/*.ts --bundle --minify --sourcemap --platform=node --outdir=dist"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "esbuild": "^0.19.5",
+    "mongodb": "^6.2.0",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.126",
+    "@types/uuid": "^9.0.6",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  }
+}
